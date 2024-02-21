@@ -55,8 +55,21 @@ dependencies:
   easy_localization: ^3.0.4
   #splash screen
   flutter_native_splash: ^2.3.13
-
-
+  #google fonts
+  google_fonts: ^6.1.0
+  # screen utlis for responsive design
+  flutter_screenutil: ^5.9.0
+  #local storage
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  #shared preferences
+  shared_preferences: ^2.2.2
+  # svg picture
+  flutter_svg: ^2.0.10+1
+  #loading_indicator
+  loading_indicator: ^3.1.1
+  #url launch
+  url_launcher: ^6.2.4
 
 
 dev_dependencies:
@@ -111,3 +124,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - assets/images/
+
