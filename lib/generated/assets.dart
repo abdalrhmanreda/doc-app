@@ -8,5 +8,7 @@ class Assets {
   static const String imagesImage = 'assets/images/Image.svg';
   static const String imagesLogo = 'assets/images/logo.svg';
   static const String imagesVector = 'assets/images/Vector.svg';
+  static const String splashAndroidSplash =
+      'assets/images/splash/android_splash.png';
   static const String splashSplash = 'assets/images/splash/splash.png';
 }
