@@ -115,7 +115,7 @@ class Style {
     appBarTheme: AppBarTheme(
       // backgroundColor: const Color(AppColors.kDarkThemColor),
       elevation: 0,
-      backgroundColor: AppColors.appBarColor,
+      backgroundColor: AppColors.kAppBarColor,
       titleTextStyle: GoogleFonts.rubik(
         color: AppColors.kWhiteColor,
         fontSize: 18.sp,
