@@ -8,7 +8,7 @@ class AppColors {
   static const Color kBlackColor = Color(0xff000000);
   static const Color kDarkThemColor = Color(0xff1f2630);
   static const Color kLoginWithGoogleColor = Color(0xffebe7e8);
-  static const Color appBarColor = Color(0xff303030);
+  static const Color kAppBarColor = Color(0xff303030);
   static const Color kGreyColor = Color(0xff82898d);
   static const Color kOrangeColor = Color(0xffff6900);
   static const Color kSkyBlueColor = Color(0xffe5eff5);
@@ -19,4 +19,9 @@ class AppColors {
   static const Color kIconMap = Color(0xff0070fc);
   static const Color konBoardingAppBarColor = Color(0xfff6f6f6);
   static const Color klightGrey = Color(0xfff6f6f6);
+  static const Color kUnFocusBorderColor = Color(0xffEDEDED);
+  static const Color kHintTextColor = Color(0xffC2C2C2);
+  static const Color kDarkBlueColor = Color(0xff242424);
+
+  static const Color kBackgroundHintTextColor = Color(0xfffdfdff);
 }
