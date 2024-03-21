@@ -39,6 +39,8 @@ class AppTextFormField extends StatelessWidget {
     this.focusedBorder,
     this.border,
     this.fillColor,
+    this.errorBorder,
+    this.focusedErrorBorder,
   });
 
   final ScrollController? scrollController;
@@ -72,6 +74,8 @@ class AppTextFormField extends StatelessWidget {
   final InputBorder? enabledBorder;
   final InputBorder? focusedBorder;
   final InputBorder? border;
+  final InputBorder? errorBorder;
+  final InputBorder? focusedErrorBorder;
   final Color? fillColor;
 
   @override
@@ -130,6 +134,20 @@ class AppTextFormField extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.r),
               borderSide: BorderSide(
                 color: unFocusBorderColor!,
+              ),
+            ),
+        errorBorder: errorBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: const BorderSide(
+                color: Colors.red,
+              ),
+            ),
+        focusedErrorBorder: focusedErrorBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: const BorderSide(
+                color: Colors.red,
               ),
             ),
         hintStyle: hintStyle ?? TextStyles.font13GrayRegular,

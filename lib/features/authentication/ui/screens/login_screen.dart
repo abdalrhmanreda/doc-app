@@ -1,16 +1,17 @@
-import 'package:doctor_app/config/colors/app_colors.dart';
-import 'package:doctor_app/core/components/app_text_form_feild.dart';
 import 'package:doctor_app/core/components/custom_button.dart';
 import 'package:doctor_app/core/helpers/spacing.dart';
-import 'package:doctor_app/features/authentication/controller/auth_cubit.dart';
 import 'package:doctor_app/features/authentication/ui/widgets/dont_have_account.dart';
+import 'package:doctor_app/features/authentication/ui/widgets/email_and_password.dart';
+import 'package:doctor_app/features/authentication/ui/widgets/login_bloc_listener.dart';
 import 'package:doctor_app/features/authentication/ui/widgets/terms_and_condtions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 import '../../../../config/themes/text_styles.dart';
+import '../../controller/login_cubit.dart';
+import '../../controller/login_state.dart';
+import '../../data/models/login_request_body.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,11 +21,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final formKey = GlobalKey<FormState>();
-  bool isPassword = true;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         // TODO: implement listener
       },
@@ -50,56 +49,30 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyles.font14GrayRegular,
                     ),
                     Spacing.verticalSpace(36),
-                    Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          AppTextFormField(
-                            hint: 'Email Address',
-                            type: TextInputType.emailAddress,
-                            controller: AuthCubit.get(context).emailController,
-                            unFocusBorderColor: AppColors.kUnFocusBorderColor,
-                            edgeInsetsGeometry: EdgeInsets.symmetric(
-                              horizontal: 10.w,
-                              vertical: 18.h,
-                            ),
+                    Column(
+                      children: [
+                        const EmailAndPassword(),
+                        Spacing.verticalSpace(24),
+                        Align(
+                          alignment: AlignmentDirectional.centerEnd,
+                          child: Text(
+                            'Forgot Password?',
+                            style: TextStyles.font13BlueRegular,
                           ),
-                          Spacing.verticalSpace(20),
-                          AppTextFormField(
-                            isPassword: isPassword,
-                            unFocusBorderColor: AppColors.kUnFocusBorderColor,
-                            hint: 'Password',
-                            type: TextInputType.emailAddress,
-                            controller:
-                                AuthCubit.get(context).passwordController,
-                            suffixIcon: isPassword
-                                ? Iconsax.eye_slash_outline
-                                : Iconsax.eye_outline,
-                            suffixPressed: () {
-                              setState(() {
-                                isPassword = !isPassword;
-                              });
-                            },
-                          ),
-                          Spacing.verticalSpace(20),
-                          Align(
-                            alignment: AlignmentDirectional.centerEnd,
-                            child: Text(
-                              'Forgot Password?',
-                              style: TextStyles.font13BlueRegular,
-                            ),
-                          ),
-                          Spacing.verticalSpace(40),
-                          CustomButton(
-                            onPressed: () {},
-                            text: 'login',
-                          ),
-                          Spacing.verticalSpace(16),
-                          const TermsAndConditionsText(),
-                          Spacing.verticalSpace(60),
-                          const DontHaveAccountText(),
-                        ],
-                      ),
+                        ),
+                        Spacing.verticalSpace(40),
+                        CustomButton(
+                          onPressed: () {
+                            validateThenDoLogin(context);
+                          },
+                          text: 'login',
+                        ),
+                        Spacing.verticalSpace(16),
+                        const TermsAndConditionsText(),
+                        Spacing.verticalSpace(60),
+                        const DontHaveAccountText(),
+                        const LoginBlocListener(),
+                      ],
                     ),
                   ],
                 ),
@@ -109,5 +82,17 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       },
     );
+  }
+
+  void validateThenDoLogin(BuildContext context) {
+    final form = context.read<LoginCubit>().formKey.currentState;
+    if (form!.validate()) {
+      context.read<LoginCubit>().userLogin(
+            LoginRequestBody(
+              email: context.read<LoginCubit>().emailController.text,
+              password: context.read<LoginCubit>().passwordController.text,
+            ),
+          );
+    }
   }
 }
