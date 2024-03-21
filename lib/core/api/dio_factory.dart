@@ -3,7 +3,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 /// this class is used to create dio instance
 class DioFactory {
-  // private constructor to prevent creating instances of this class
+  /// private constructor to prevent creating instances of this class
   DioFactory._();
   static Dio? dio;
 

@@ -21,14 +21,14 @@ class _ApiService implements ApiService {
   String? baseUrl;
 
   @override
-  Future<ApiResult<dynamic>> login(Map<String, dynamic> body) async {
+  Future<LoginResponseBody> login(LoginRequestBody loginRequestBody) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(body);
+    _data.addAll(loginRequestBody.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ApiResult<dynamic>>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponseBody>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -44,7 +44,7 @@ class _ApiService implements ApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResult<dynamic>.fromJson(_result.data!);
+    final value = LoginResponseBody.fromJson(_result.data!);
     return value;
   }
 
