@@ -2,7 +2,7 @@ import 'package:doctor_app/core/helpers/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class PasswordValidation extends StatelessWidget {
+class PasswordValidation extends StatefulWidget {
   const PasswordValidation({
     super.key,
     required this.hasLowerCase,
@@ -21,15 +21,22 @@ class PasswordValidation extends StatelessWidget {
   final bool hasSpecialCharacter;
 
   final bool hasMinimumLength;
+
+  @override
+  State<PasswordValidation> createState() => _PasswordValidationState();
+}
+
+class _PasswordValidationState extends State<PasswordValidation> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildValidationRow('At least 8 characters', hasMinimumLength),
-        buildValidationRow('At least 8 characters', hasLowerCase),
-        buildValidationRow('At least 8 characters', hasUpperCase),
-        buildValidationRow('At least 8 characters', hasNumber),
-        buildValidationRow('At least 1 special character', hasSpecialCharacter),
+        buildValidationRow('At least 8 characters', widget.hasMinimumLength),
+        buildValidationRow('At least 8 characters', widget.hasLowerCase),
+        buildValidationRow('At least 8 characters', widget.hasUpperCase),
+        buildValidationRow('At least 8 characters', widget.hasNumber),
+        buildValidationRow(
+            'At least 1 special character', widget.hasSpecialCharacter),
       ],
     );
   }
