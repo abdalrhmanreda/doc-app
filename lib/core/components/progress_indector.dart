@@ -15,9 +15,7 @@ class CustomLoadingIndicator extends StatelessWidget {
         child: LoadingIndicator(
           indicatorType: Indicator.ballRotateChase,
           colors: [
-            Color(
-              AppColors.kPrimaryColor,
-            ),
+            AppColors.kPrimaryColor,
           ],
         ),
       ),

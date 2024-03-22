@@ -1,20 +1,20 @@
+import 'package:doctor_app/config/themes/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/colors/app_colors.dart';
 
-class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField({
+class AppTextFormField extends StatelessWidget {
+  const AppTextFormField({
     super.key,
     this.formFieldKey,
-    required this.isPassword,
+    this.isPassword,
     this.type,
     this.controller,
     this.validate,
     this.onTap,
     this.suffixIcon,
     this.suffixPressed,
-    this.border,
     this.edgeInsetsGeometry,
     this.hint,
     this.onChanged,
@@ -22,8 +22,6 @@ class CustomTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.labelStyle,
     this.hintStyle,
-    this.enabledBorder,
-    this.focusedBorder,
     this.maxLine,
     this.minLine,
     this.isEnable,
@@ -35,10 +33,18 @@ class CustomTextFormField extends StatelessWidget {
     this.hintMaxLines,
     this.onSaved,
     this.label,
+    this.unFocusBorderColor,
+    this.focusColorBorder,
+    this.enabledBorder,
+    this.focusedBorder,
+    this.border,
+    this.fillColor,
+    this.errorBorder,
+    this.focusedErrorBorder,
   });
 
   final ScrollController? scrollController;
-  final bool isPassword;
+  final bool? isPassword;
   final bool? autofocus;
   final TextInputType? type;
   final TextEditingController? controller;
@@ -51,9 +57,6 @@ class CustomTextFormField extends StatelessWidget {
   final IconData? suffixIcon;
   final VoidCallback? onTap;
   final VoidCallback? suffixPressed;
-  final InputBorder? border;
-  final InputBorder? focusedBorder;
-  final InputBorder? enabledBorder;
   final EdgeInsetsGeometry? edgeInsetsGeometry;
   final String? label;
   final TextStyle? hintStyle;
@@ -66,53 +69,100 @@ class CustomTextFormField extends StatelessWidget {
   final TextDirection? hintTextDirection;
   final int? hintMaxLines;
   final Key? formFieldKey;
+  final Color? unFocusBorderColor;
+  final Color? focusColorBorder;
+  final InputBorder? enabledBorder;
+  final InputBorder? focusedBorder;
+  final InputBorder? border;
+  final InputBorder? errorBorder;
+  final InputBorder? focusedErrorBorder;
+  final Color? fillColor;
 
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
       key: formFieldKey,
       scrollController: scrollController,
-      obscureText: isPassword,
+      obscureText: isPassword ?? false,
       keyboardType: type,
+      style: TextStyles.font14DarkBlueMedium,
       controller: controller,
       onFieldSubmitted: onSubmitted,
       onSaved: onSaved,
       onChanged: onChanged,
       validator: validate,
-      maxLines: maxLine,
+      maxLines: maxLine ?? 1,
       minLines: minLine,
       onTap: onTap,
       enabled: isEnable,
       focusNode: focusNode,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: fillColor ?? AppColors.kBackgroundHintTextColor,
+        isDense: true,
         hintTextDirection: hintTextDirection,
         hintMaxLines: hintMaxLines,
         helperStyle: const TextStyle(
           decorationStyle: TextDecorationStyle.dotted,
         ),
-        contentPadding: edgeInsetsGeometry,
+        contentPadding: edgeInsetsGeometry ??
+            EdgeInsets.symmetric(
+              horizontal: 10.w,
+              vertical: 20.h,
+            ),
         prefixIcon: Icon(
           prefixIcon,
           size: 20,
           color: Theme.of(context).colorScheme.onSurface,
         ),
-        border: border,
-        focusedBorder: focusedBorder,
-        enabledBorder: enabledBorder,
-        hintStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-              color: Colors.grey,
-              fontSize: 15.sp,
+        border: border ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: BorderSide(
+                color: unFocusBorderColor!,
+              ),
             ),
+        focusedBorder: focusedBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: BorderSide(
+                color: focusColorBorder ?? AppColors.kPrimaryColor,
+              ),
+            ),
+        enabledBorder: enabledBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: BorderSide(
+                color: unFocusBorderColor!,
+              ),
+            ),
+        errorBorder: errorBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: const BorderSide(
+                color: Colors.red,
+              ),
+            ),
+        focusedErrorBorder: focusedErrorBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: const BorderSide(
+                color: Colors.red,
+              ),
+            ),
+        hintStyle: hintStyle ?? TextStyles.font13GrayRegular,
         hintText: hint,
         labelText: label ?? '',
         suffixIcon: suffixIcon != null
-            ? IconButton(
-                onPressed: suffixPressed,
-                icon: Icon(
+            ? InkWell(
+                onTap: suffixPressed,
+                child: Icon(
                   suffixIcon,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: AppColors.kHintTextColor,
                 ))
             : null,
         labelStyle: Theme.of(context).textTheme.bodyMedium,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         floatingLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: AppColors.kPrimaryColor,
             ),
